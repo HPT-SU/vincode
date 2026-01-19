@@ -1,6 +1,3 @@
-# coding: utf-8
-from __future__ import unicode_literals, absolute_import
-
-
-VERSION = (0, 1, 0)
-__version__ = '.'.join(map(str, VERSION))
+version = '2.0.0'
+suffix = None
+build = 0

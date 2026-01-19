@@ -1,0 +1,60 @@
+[build-system]
+requires = ['setuptools']
+build-backend = 'setuptools.build_meta'
+
+[tool.setuptools.packages.find]
+where = ['.']
+include = [
+    'vincode',
+    'vincode.*',
+]
+exclude = ['tests*']
+
+[tool.setuptools.dynamic]
+version = { attr = 'vincode.__version__' }
+
+[tool.hpt_builder]
+dependencies = []
+
+[tool.hpt_builder.deps]
+static = [
+    { pip = 'pyparsing', gentoo = 'dev-python/pyparsing' },
+]
+dynamic = []
+
+[tool.hpt_builder.repository]
+private = 'yes'
+host = 'github.com'
+path = 'git@{host}:HPT-SU/vincode.git'
+
+[project]
+name = 'vincode'
+description = 'VIN Code parser'
+authors = [
+    { name = 'Artem Vlasov', email = 'root@proscript.ru' },
+]
+maintainers = [
+    { name = 'Artem Vlasov', email = 'root@proscript.ru' },
+]
+readme = 'README.md'
+license = 'MIT'
+
+requires-python = '>= 3.10'
+
+dependencies = [
+    'pyparsing',
+]
+
+dynamic = [
+    'version',
+]
+
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Developers',
+    'Natural Language :: Russian',
+    'Programming Language :: Python',
+]
+
+[project.urls]
+Repository = 'https://github.com/HPT-SU/vincode/'

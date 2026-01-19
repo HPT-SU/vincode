@@ -1,13 +1,9 @@
-# coding: utf-8
-from __future__ import unicode_literals, absolute_import
-
 from pyparsing import *
 
 from .const import symbols, numbers, correct_chars
-from .raw import translate, prepare_string
+from .raw import prepare_string
 
-__all__ = ['parse']
-
+__all__ = ['parse', 'ParseException']
 
 _lparent = Literal('(')
 _rparent = Literal(')')
@@ -45,34 +41,33 @@ deep_variants = Group(
     Suppress(_rparent)
 )
 
-
 # Полный VIN-код
 vin_exact = Word(correct_chars, exact=17)
 
 # Частичный VIN-код (с подстановками, подменами и многоточиями
 vin_partial = (
-    vin_word +
-    ZeroOrMore(
-        _pattern ^
-        sub_variants ^
-        deep_variants ^
-        vin_word
-    )
+        vin_word +
+        ZeroOrMore(
+            _pattern ^
+            sub_variants ^
+            deep_variants ^
+            vin_word
+        )
 )
 
 # VIN-код, начинающийся со знака вопроса
 vin_prefixed = (
-    Literal('?') +
-    vin_partial
+        Literal('?') +
+        vin_partial
 )
 
 # Диапазон VIN-кодов
 # Два полных VIN-кода ОТ и ДО (AAAAAAAAAAAAAA100->AAAAAAAAAAAAAA999)
 # Или полный VIN-код начала диапазона и последние цифры конца диапазона: (AAAAAAAAAAAAAA100->999)
 vin_range = (
-    Group(vin_partial) +
-    Literal('->') +
-    Group(vin_partial ^ vin_numbers)
+        Group(vin_partial) +
+        Literal('->') +
+        Group(vin_partial ^ vin_numbers)
 )
 
 # Матчер одного кода разных форматов

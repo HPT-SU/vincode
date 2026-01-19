@@ -1,7 +1,5 @@
-#coding: utf-8
-from __future__ import unicode_literals, absolute_import
-
 import re
+
 from .const import correct_chars, length, trans_russian
 
 replace_newlines = re.compile(r'[\r\n]+', re.U | re.M)
@@ -39,6 +37,7 @@ def translate(vin, trans_src=None):
     else:
         trans = trans_russian
     return vin.translate(trans)
+
 
 sparse_len = length * 2 - 1
 match_sparse_vin = re.compile(r'[%(cs)s? ]{17,%(maxlen)d}' % dict(cs=correct_chars, maxlen=sparse_len), re.U)
@@ -83,4 +82,3 @@ def prepare_string(s):
     s = s.strip('|')
 
     return s
-

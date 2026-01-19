@@ -1,6 +1,3 @@
-#coding: utf-8
-from __future__ import unicode_literals, absolute_import
-
 length = 17
 symbols = 'ABCDEFGHJKLMNPRSTUVWXYZ'
 numbers = ''.join([str(num) for num in range(10)])
