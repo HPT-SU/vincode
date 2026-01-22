@@ -17,15 +17,36 @@ version = { attr = 'vincode.__version__' }
 dependencies = []
 
 [tool.hpt_builder.deps]
+# копируются как есть в project.dependencies
 static = [
-    { pip = 'pyparsing', gentoo = 'dev-python/pyparsing' },
+    'pyparsing',
+    # Если не задано как массив, значит
+    # имя ебилда равно имени pip-пакета, категория - по-умолчанию
+    # если отличаются - лучше задать как массив:
+    # { pip = 'pyparsing', gentoo = 'dev-python/pyparsing' },
 ]
+# рассчитываются и записываются в project.dependencies
 dynamic = []
+
+[tool.hpt_builder.gentoo]
+# Если не указана, dev-python по-умолчанию
+category = 'dev-python'
+virtuals = [
+    # если категория не указана, dev-python по-умолчанию
+    # { category = 'dev-python', name = 'vincode-dev' },
+]
+# templates_dir = ''
+# Последвательность поиска шаблона:
+# в репозитории проекта:
+# 1. templates_dir/{project.category}/{project.name}.ebuild
+# в репозитории билдера
+# 2. ebuilds/{project.category}/{project.name}.ebuild
+# 3. ebuilds/{project.category}/default.ebuild
 
 [tool.hpt_builder.repository]
 private = 'yes'
 host = 'github.com'
-path = 'git@{host}:HPT-SU/vincode.git'
+path = 'git@{host}:{owner}/{name}.git'
 
 [project]
 name = 'vincode'
